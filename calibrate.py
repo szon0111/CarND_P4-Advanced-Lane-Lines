@@ -39,8 +39,7 @@ img = cv2.imread('./camera_cal/calibration1.jpg')
 img_size = (img.shape[1], img.shape[0])
 
 # Perform calibration given object points and image points
-ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(
-    objp_list, imgp_list, img_size, None, None)
+ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objp_list, imgp_list, img_size, None, None)
 
 # Save the  calibration result for later use
 dist_pickle = {}
