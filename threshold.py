@@ -1,8 +1,9 @@
-import pickle
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+
+from undistort import undistort
 
 
 def abs_threshold(img, orient='x', thresh=(20, 100)):
@@ -130,17 +131,12 @@ def combined_threshold(img):
 
 
 if __name__ == '__main__':
-    with open('./calibrate.p', "rb") as pickle_file:
-        dist_pickle = pickle.load(pickle_file)
-    mtx = dist_pickle['mtx']
-    dist = dist_pickle['dist']
-
     image_file = 'test_images/test2.jpg'
     image = mpimg.imread(image_file)
-    image = cv2.undistort(image, mtx, dist, None, mtx)
+    undistorted = undistort(image)
 
     # Create binary outputs
-    abs_thresh, mag_thresh, dir_thresh, hls_thresh, hsv_thresh, combined_output = combined_threshold(image)
+    abs_thresh, mag_thresh, dir_thresh, hls_thresh, hsv_thresh, combined_output = combined_threshold(undistorted)
 
     # Plot binary output images in order
     plt.subplot(2, 3, 1)

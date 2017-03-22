@@ -1,62 +1,69 @@
 import cv2
-import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+from undistort import undistort
 from threshold import combined_threshold
 
 
-def perspective_transform(img):
+class Perspective:
     """
     Transform perspective based on source points and destination points
     """
 
-    img_size = (img.shape[1], img.shape[0])
+    def __init__(self):
+        src = np.float32(
+            [[200, 700],
+             [1080, 700],
+             [570, 460],
+             [710, 460]]
+        )
 
-    src = np.float32(
-        [[200, 700],
-         [1080, 700],
-         [570, 460],
-         [710, 460]]
-    )
+        dst = np.float32(
+            [[260, 700],
+             [1020, 700],
+             [240, 0],
+             [1040, 0]]
+        )
 
-    dst = np.float32(
-        [[260, 700],
-         [1020, 700],
-         [240, 0],
-         [1040, 0]]
-    )
+        self.M = cv2.getPerspectiveTransform(src, dst)
+        self.Minv = cv2.getPerspectiveTransform(dst, src)
 
-    M = cv2.getPerspectiveTransform(src, dst)
-    M_inv = cv2.getPerspectiveTransform(dst, src)
+    def warp(self, img):
+        """
+        warp image to bird's eye view
+        """
+        img_size = (img.shape[1], img.shape[0])
+        warped = cv2.warpPerspective(img, self.M, img_size)
 
-    warped = cv2.warpPerspective(img, M, img_size)
-    unwarped = cv2.warpPerspective(warped, M_inv, (warped.shape[1], warped.shape[0]))
+        return warped
 
-    return warped, unwarped, M, M_inv
+    def unwarp(self, img):
+        """
+       unwarp image back to original view
+        """
+        img_size = (img.shape[1], img.shape[0])
+        unwarped = cv2.warpPerspective(img, self.M, img_size)
+
+        return unwarped
 
 
 if __name__ == '__main__':
-    with open('./calibrate.p', "rb") as pickle_file:
-        dist_pickle = pickle.load(pickle_file)
-    mtx = dist_pickle['mtx']
-    dist = dist_pickle['dist']
+    perspective = Perspective()
+
 
     image_file = 'test_images/test2.jpg'
     image = mpimg.imread(image_file)
-    image = cv2.undistort(image, mtx, dist, None, mtx)
-
+    undistorted = undistort(image)
     # Create binary outputs
-    abs_thresh, mag_thresh, dir_thresh, hls_thresh, hsv_thresh, combined_output = combined_threshold(image)
-
+    abs_thresh, mag_thresh, dir_thresh, hls_thresh, hsv_thresh, combined_output = combined_threshold(undistorted)
     # Transform perspective
-    warped1, unwarped1, M1, M_inv1 = perspective_transform(abs_thresh)
-    warped2, unwarped2, M2, M_inv2 = perspective_transform(mag_thresh)
-    warped3, unwarped3, M3, M_inv3 = perspective_transform(dir_thresh)
-    warped4, unwarped4, M4, M_inv4 = perspective_transform(hls_thresh)
-    warped5, unwarped5, M5, M_inv5 = perspective_transform(hsv_thresh)
-    warped6, unwarped6, M6, M_inv6 = perspective_transform(combined_output)
-
+    warped1 = perspective.warp(abs_thresh)
+    warped2 = perspective.warp(mag_thresh)
+    warped3 = perspective.warp(dir_thresh)
+    warped4 = perspective.warp(hls_thresh)
+    warped5 = perspective.warp(hsv_thresh)
+    warped6 = perspective.warp(combined_output)
     # Plot binary output images in order
     plt.subplot(2, 3, 1)
     plt.title("abs")
@@ -77,7 +84,4 @@ if __name__ == '__main__':
     plt.title("combined")
     plt.imshow(warped6, cmap='gray')
 
-    plt.show()
-
-    plt.imshow(image)
     plt.show()
