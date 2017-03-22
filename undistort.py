@@ -1,6 +1,6 @@
 import glob
-import cv2
 import pickle
+import cv2
 import numpy as np
 
 
@@ -10,7 +10,7 @@ mtx = dist_pickle['mtx']
 dist = dist_pickle['dist']
 
 # Make a list of test images
-image_list = glob.glob('./test_images/test*.jpg')
+image_list = glob.glob('./test_images/*.jpg')
 for i, filename in enumerate(image_list):
     # read in image
     img = cv2.imread(filename)

@@ -1,6 +1,6 @@
-import cv2
 import glob
 import pickle
+import cv2
 import numpy as np
 
 
@@ -24,7 +24,7 @@ for i, filename in enumerate(image_list):
     ret, corners = cv2.findChessboardCorners(gray, (9, 6), None)
 
     # If found, add object points, image points
-    if ret == True:
+    if ret:
         print('working on', filename)
         objp_list.append(objp)
         imgp_list.append(corners)

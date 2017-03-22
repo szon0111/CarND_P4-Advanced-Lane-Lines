@@ -1,5 +1,5 @@
-import cv2
 import pickle
+import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -88,7 +88,8 @@ def hls_threshold(img, thresh=(100, 255)):
 
 def hsv_threshold(img, thresh=([20, 100, 100], [35, 255, 255], [0, 0, 230], [180, 25, 255])):
     """
-
+    Find white and yellow based on range and apply threshold
+    Output array of the same size as the input image
     """
     # Convert to HSV color space
     hsv = cv2.cvtColor(img, cv2. COLOR_RGB2HSV)
@@ -134,13 +135,12 @@ if __name__ == '__main__':
     mtx = dist_pickle['mtx']
     dist = dist_pickle['dist']
 
-    image_file = 'test_images/test6.jpg'
+    image_file = 'test_images/test2.jpg'
     image = mpimg.imread(image_file)
     image = cv2.undistort(image, mtx, dist, None, mtx)
 
     # Create binary outputs
-    abs_thresh, mag_thresh, dir_thresh, hls_thresh, hsv_thresh, combined_output = combined_threshold(
-        image)
+    abs_thresh, mag_thresh, dir_thresh, hls_thresh, hsv_thresh, combined_output = combined_threshold(image)
 
     # Plot binary output images in order
     plt.subplot(2, 3, 1)
