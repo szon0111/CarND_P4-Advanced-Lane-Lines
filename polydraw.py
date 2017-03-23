@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+
 from undistort import undistort
 from threshold import combined_threshold
 from perspective import Perspective
@@ -9,6 +10,10 @@ from polyfit import Polyfit
 
 
 def draw(img, warped, left_fit, right_fit, Minv):
+    """
+   Draw the driveable area and warp back to original image space
+   Combine the result with undistorted image
+    """
     # Create an image to draw the lines on
     warp_zero = np.zeros_like(warped).astype(np.uint8)
     color_warp = np.dstack((warp_zero, warp_zero, warp_zero))

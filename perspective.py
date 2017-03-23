@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+
 from undistort import undistort
 from threshold import combined_threshold
 
@@ -50,7 +51,6 @@ class Perspective:
 
 if __name__ == '__main__':
     perspective = Perspective()
-
 
     image_file = 'test_images/test2.jpg'
     image = mpimg.imread(image_file)

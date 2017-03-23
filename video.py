@@ -1,6 +1,4 @@
 import cv2
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 from moviepy.video.io.VideoFileClip import VideoFileClip
 
 from undistort import undistort
@@ -16,7 +14,7 @@ perspective = Perspective()
 
 def video(input_video):
     """
-
+    Build video with lane detection drawings, curvature and vehicle position
     """
     original_video = '{}.mp4'.format(input_video)
     video = VideoFileClip(original_video)
@@ -26,7 +24,8 @@ def video(input_video):
 
 def process(video):
     """
-
+    Process undistortion, thresholding, warp, line detection
+    Annotate curvature and vehicle position values to frame
     """
     # Undistort frame
     undistorted = undistort(video)

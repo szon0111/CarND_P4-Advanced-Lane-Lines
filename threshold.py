@@ -137,7 +137,6 @@ if __name__ == '__main__':
 
     # Create binary outputs
     abs_thresh, mag_thresh, dir_thresh, hls_thresh, hsv_thresh, combined_output = combined_threshold(undistorted)
-
     # Plot binary output images in order
     plt.subplot(2, 3, 1)
     plt.title("abs")

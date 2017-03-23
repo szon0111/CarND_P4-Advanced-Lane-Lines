@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+
 from undistort import undistort
 from threshold import combined_threshold
 from perspective import Perspective
@@ -189,6 +190,9 @@ class Polyfit:
         return position
 
     def visualize_window(self, img, vars, save_image=False):
+        """
+        Visualize the sliding windows and mark the lane lines on bird's eye view image
+        """
         # Define variables from vars
         self.left_fit = vars['left_fit']
         self.right_fit = vars['right_fit']
@@ -219,6 +223,9 @@ class Polyfit:
         plt.show()
 
     def visualize_area(self, img, vars, save_image=False):
+        """
+        Visualize the targeted search area based on previous frame
+        """
         # Define variables from vars
         self.left_fit = vars['left_fit']
         self.right_fit = vars['right_fit']
