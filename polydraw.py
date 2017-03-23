@@ -53,5 +53,5 @@ if __name__ == '__main__':
     left_fit, right_fit, vars = polyfit.poly_fit_skip(warped)
     new_img = draw(image, warped, left_fit, right_fit, perspective.Minv)
     plt.imshow(new_img)
+    plt.axis("off")
     plt.show()
-    print(new_img.shape)

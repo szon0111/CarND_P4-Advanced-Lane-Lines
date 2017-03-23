@@ -131,7 +131,7 @@ def combined_threshold(img):
 
 
 if __name__ == '__main__':
-    image_file = 'test_images/test2.jpg'
+    image_file = 'test_images/test3.jpg'
     image = mpimg.imread(image_file)
     undistorted = undistort(image)
 
@@ -139,22 +139,29 @@ if __name__ == '__main__':
     abs_thresh, mag_thresh, dir_thresh, hls_thresh, hsv_thresh, combined_output = combined_threshold(undistorted)
     # Plot binary output images in order
     plt.subplot(2, 3, 1)
-    plt.title("abs")
-    plt.imshow(abs_thresh, cmap='gray')
+    plt.title("Original")
+    plt.imshow(image)
+    plt.axis("off")
     plt.subplot(2, 3, 2)
-    plt.title("mag")
-    plt.imshow(mag_thresh, cmap='gray')
+    plt.title("Absolute")
+    plt.imshow(abs_thresh, cmap='gray')
+    plt.axis("off")
     plt.subplot(2, 3, 3)
-    plt.title("dir")
-    plt.imshow(dir_thresh, cmap='gray')
+    plt.title("Magnitude")
+    plt.imshow(mag_thresh, cmap='gray')
+    plt.axis("off")
     plt.subplot(2, 3, 4)
-    plt.title("HLS")
-    plt.imshow(hls_thresh, cmap='gray')
+    plt.title("Directional")
+    plt.imshow(dir_thresh, cmap='gray')
+    plt.axis("off")
     plt.subplot(2, 3, 5)
     plt.title("HSV")
     plt.imshow(hsv_thresh, cmap='gray')
+    plt.axis("off")
     plt.subplot(2, 3, 6)
-    plt.title("combined")
+    plt.title("Combined")
     plt.imshow(combined_output, cmap='gray')
+    plt.axis("off")
 
+    plt.tight_layout()
     plt.show()

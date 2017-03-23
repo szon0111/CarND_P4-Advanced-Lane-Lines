@@ -25,6 +25,7 @@ class Polyfit:
         self.ym_per_pix = 30 / 720  # meters per pixel in y dimension
         self.xm_per_pix = 3.7 / 700  # meters per pixel in x dimension
         self.margin = 80
+
     def poly_fit_skip(self, img):
         """
         Skip the sliding windows if polynomial is empty and search in a margin around the previous line
@@ -217,7 +218,8 @@ class Polyfit:
         plt.plot(right_fit_x, plot_y, color='yellow')
         plt.xlim(0, 1280)
         plt.ylim(720, 0)
-        # save visualization
+        plt.axis("off")
+        # Save visualization
         if save_image:
             plt.savefig('./output_images/vis_window.png', bbox_inches='tight')
         plt.show()
@@ -270,7 +272,8 @@ class Polyfit:
         plt.plot(right_fit_x, plot_y, color='yellow')
         plt.xlim(0, 1280)
         plt.ylim(720, 0)
-        # save visualization
+        plt.axis("off")
+        # Save visualization
         if save_image:
             plt.savefig('./output_images/vis_area.png', bbox_inches='tight')
         plt.show()

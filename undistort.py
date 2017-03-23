@@ -2,7 +2,11 @@ import glob
 import pickle
 import cv2
 
+
 def undistort(img):
+    """
+    Undistort image given calibration result from calibrate.py in pickle data
+    """
     # Read in saved object points and image points
     dist_pickle = pickle.load(open('./calibrate.p', "rb"))
     mtx = dist_pickle['mtx']
