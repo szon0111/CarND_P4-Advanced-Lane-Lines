@@ -1,4 +1,4 @@
-# Project 4: Advanced Lane Finding (in progress)
+# Project 4: Advanced Lane Finding
 
 [//]: # (Image References)
 
